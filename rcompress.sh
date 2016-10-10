@@ -6,13 +6,19 @@
 #  3. Constructs a histogram of the cumulative color usage of all PGM files.
 #  4. Prints said histogram to the stdin.
 
-if [ "$#" -ne 2 ]; then
-  echo "Usage: $0 dir bit"
-  echo "  dir - directory containing PGM image files."
-  echo "  bit - new bit for compressed PGM files."
+if [ "$#" -ne 2 ] && [ "$#" -ne 3 ]; then
+  echo "Usage: $0 dir bit [parent=1]"
+  echo "  dir    - directory containing PGM image files."
+  echo "  bit    - new bit for compressed PGM files."
+  echo "  parent - 1 if should create parent dirs, 0 otherwise."
   echo "Example:"
   echo "  ./rcompress.sh pgm_files/ 4"
   exit
+fi
+
+create_parent="1"
+if [ ! -z "$3" ]; then
+  create_parent="$3"
 fi
 
 g++ pgm_compress.cpp -o pgm_compress.out
@@ -28,7 +34,20 @@ do
   filename=$(basename "$i")
   base="${filename%.*}"
   ./pgm_compress.out $2 $base < $i
-  echo "${base}_${2}-bit.pgm" >> /tmp/files.txt
+
+  new_name="${base}_${2}-bit.pgm"
+
+  if [ "$create_parent" == "1" ]; then
+    parent="$(basename "$(dirname "$i")")"
+    if [ ! -d "$parent" ]; then
+      mkdir "$parent"
+    fi
+    mv "$new_name" "${parent}/$new_name"
+    echo "${parent}/$new_name" >> /tmp/files.txt
+  else
+    echo "$new_name" >> /tmp/files.txt
+  fi
+
 done
 
 ./pgm_histogram.out < /tmp/files.txt

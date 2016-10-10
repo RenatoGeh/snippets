@@ -6,19 +6,24 @@
 #  3. Constructs a histogram of the cumulative color usage of all PGM files.
 #  4. Prints said histogram to the stdin.
 
-if [ "$#" -ne 2 ] && [ "$#" -ne 3 ]; then
-  echo "Usage: $0 dir bit [parent=1]"
+if [ "$#" -ne 2 ] && [ "$#" -ne 3 ] && [ "$#" -ne 4 ]; then
+  echo "Usage: $0 dir bit [parent=1] [plot=1]"
   echo "  dir    - directory containing PGM image files."
   echo "  bit    - new bit for compressed PGM files."
   echo "  parent - 1 if should create parent dirs, 0 otherwise."
+  echo "  plot   - 1 if should plot with gnuplot, 0 otherwise."
   echo "Example:"
-  echo "  ./rcompress.sh pgm_files/ 4"
+  echo "  $0 pgm_files/ 4 1 0"
   exit
 fi
 
 create_parent="1"
+plot="1"
 if [ ! -z "$3" ]; then
   create_parent="$3"
+fi
+if [ ! -z "$4" ]; then
+  plot="$4"
 fi
 
 g++ pgm_compress.cpp -o pgm_compress.out
@@ -50,4 +55,6 @@ do
 
 done
 
-./pgm_histogram.out < /tmp/files.txt
+./pgm_histogram.out $plot < /tmp/files.txt
+
+gnuplot plot_script.gpi

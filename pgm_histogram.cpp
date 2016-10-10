@@ -3,7 +3,7 @@
 #include <cstring>
 
 /* Creates a histogram of pixel colors of a set of PGM images. */
-int main() {
+int main(int argc, char *args[]) {
   int *hist, n;
 
   scanf("%d ", &n);
@@ -40,6 +40,34 @@ int main() {
   for (int i = 0; i < max; ++i)
     printf("  [%d] = %d\n", i, hist[i]);
   puts("End of PGM histogram.");
+
+  if (argc > 1) {
+    int plot = atoi(args[1]);
+    if (!plot) goto end;
+    puts("Creating hist.dat file for gnuplot...");
+
+    FILE *dat = fopen("hist.dat", "w");
+    fputs("# Gnuplot dat file for PGM grayscale usage histogram.\n", dat);
+    fputs("# Intensity  Counts\n", dat);
+    for (int i = 0; i < max; ++i)
+      fprintf(dat, "%9d  %d\n", i, hist[i]);
+    fclose(dat);
+
+    puts("Creating gnuplot script...");
+    FILE *script = fopen("plot_script.gpi", "w");
+    fprintf(script, "set title \"PGM grayscale usage for pgm-%d images.\"\n", max);
+    fprintf(script, "set xrange [0:%d]\nset auto y\n", max-1);
+    fprintf(script, "set style data histogram\nset term png\nset output \"histogram.png\"\n");
+    fprintf(script, "set xlabel \"Counts of each intensity\"\nset ylabel \"Counts axis\"\n");
+    fprintf(script, "set boxwidth 0.5 relative\nset style fill solid 0.5\nunset key\n");
+    fprintf(script, "set xtics rotate\nset x2tics\nset x2label \"Intensities\"\n");
+    fprintf(script, "set x2range [0:%d]\n", max-1);
+    //fprintf(script, "set terminal png size 5000,5000\n");
+    fprintf(script, "plot \"hist.dat\" [0:255] using 0:2:1:xticlabels(2) with boxes lc variable\n");
+    fclose(script);
+  }
+
+end:
   free(hist);
 
   return 0;

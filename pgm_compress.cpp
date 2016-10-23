@@ -7,7 +7,7 @@
  *
  * Given an m-bit PGM file F:
  *
- * Let q = 2^m.
+ * Let q = 2^m - 1.
  *   | P2
  *   | 46 56
  *   | q
@@ -15,7 +15,7 @@
  *
  * Compresses F into an n-bit PGM file H, with n < m:
  *
- * Let p = 2^n.
+ * Let p = 2^n - 1.
  *   | P2
  *   | 46 56
  *   | p
@@ -23,11 +23,17 @@
  */
 int main(int argc, char *args[]) {
   int bit = 4, max = 1;
+  int r = 0;
 
   if (argc > 1)
     bit = atoi(args[1]);
+  if (argc > 3)
+    r = atoi(args[3]);
 
-  max <<= bit;
+  if (!r)
+    max <<= bit;
+  else
+    max = bit;
 
   int w, h, omax;
   scanf("P2 %d %d %d", &w, &h, &omax);
@@ -43,10 +49,10 @@ int main(int argc, char *args[]) {
 
   FILE *out;
   out = fopen(filename, "w");
-  fprintf(out, "P2\n%d %d\n%d\n", w, h, max);
+  fprintf(out, "P2\n%d %d\n%d\n", w, h, --max);
 
   int n = w*h;
-  double df = (double) max / (double) omax;
+  double df = (double) (max+1) / (double) (omax+1);
   for (int i = 0; i < n; ++i) {
     int opx;
     scanf("%d", &opx);

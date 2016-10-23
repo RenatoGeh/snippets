@@ -19,7 +19,7 @@ int main(int argc, char *args[]) {
 
     int w, h;
     fscanf(pgm, "P2 %d %d %d", &w, &h, &max);
-
+    ++max;
     if (hist == NULL) {
       hist = (int*) malloc(max*sizeof(int));
       for (int j = 0; j < max; ++j)

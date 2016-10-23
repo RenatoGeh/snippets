@@ -6,24 +6,29 @@
 #  3. Constructs a histogram of the cumulative color usage of all PGM files.
 #  4. Prints said histogram to the stdin.
 
-if [ "$#" -ne 2 ] && [ "$#" -ne 3 ] && [ "$#" -ne 4 ]; then
-  echo "Usage: $0 dir bit [parent=1] [plot=1]"
+if [ "$#" -lt 2 ] && [ "$#" -gt 5 ]; then
+  echo "Usage: $0 dir bit [parent=1] [plot=1] [real=0]"
   echo "  dir    - directory containing PGM image files."
   echo "  bit    - new bit for compressed PGM files."
   echo "  parent - 1 if should create parent dirs, 0 otherwise."
   echo "  plot   - 1 if should plot with gnuplot, 0 otherwise."
+  echo "  real   - 1 if bit should be the absolute value, else max value is 2^bit."
   echo "Example:"
-  echo "  $0 pgm_files/ 4 1 0"
+  echo "  $0 pgm_files/ 4 1 0 0"
   exit
 fi
 
 create_parent="1"
 plot="1"
+real="0"
 if [ ! -z "$3" ]; then
   create_parent="$3"
 fi
 if [ ! -z "$4" ]; then
   plot="$4"
+fi
+if [ ! -z "$5" ]; then
+  real="$5"
 fi
 
 g++ pgm_compress.cpp -o pgm_compress.out
@@ -38,7 +43,7 @@ for i in "${files[@]}"
 do
   filename=$(basename "$i")
   base="${filename%.*}"
-  ./pgm_compress.out $2 $base < $i
+  ./pgm_compress.out $2 $base $real < $i
 
   new_name="${base}_${2}-bit.pgm"
 

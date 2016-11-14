@@ -11,3 +11,15 @@
   - Creates an n-bit compressed PGM of each found PGM file.
   - Constructs a histogram out of all such PGM n-bit files.
   - Prints histogram to the `stdin`.
+
+3. `trim.sh`:
+  - Trims an image with 10% fuzzy rate.
+
+4. `jpg2pgm.sh`:
+  - Resizes all files to a given (x, y) size.
+  - Searches for files in directories one level down.
+  - Ignores aspect ratio.
+
+5. `count.sh`:
+  - Counts number of files in directories one level down.
+  - Prints each count, mean, max and min.

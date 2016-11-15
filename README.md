@@ -23,3 +23,10 @@
 5. `count.sh`:
   - Counts number of files in directories one level down.
   - Prints each count, mean, max and min.
+
+6. `coin.sh`:
+  - For each directory inside pwd, toss a coin for each PGM file in it.
+  - If heads, put it in a folder named `train` inside the directory
+    being scanned.
+  - If tails, put it in `test`.
+  - Number of files is limited by `ntest` and `ntrain`.

@@ -29,8 +29,8 @@ folds=(*)
 #done
 
 #ratio=$(( max_y / max_x ))
-x=100
-y=100
+x=300
+y=200
 #y=$(( x * ratio ))
 #y=$( printf "%.0f" y )
 #echo "Set max dimensions as (${max_x},${max_y})."

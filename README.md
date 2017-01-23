@@ -30,3 +30,7 @@
     being scanned.
   - If tails, put it in `test`.
   - Number of files is limited by `ntest` and `ntrain`.
+
+7. `word_count.cpp`:
+  - Takes a `.voc` file and counts word occurences (frequencies and
+    percentage).

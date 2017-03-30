@@ -34,3 +34,8 @@
 7. `word_count.cpp`:
   - Takes a `.voc` file and counts word occurences (frequencies and
     percentage).
+
+8. `prune_words.cpp`:
+  - Takes a `.voc` file and rewrites it as a new vocabulary containing
+    only the k most frequent words.
+  - Optionally deletes words that do not meet the criterion.

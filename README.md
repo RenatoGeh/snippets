@@ -39,3 +39,7 @@
   - Takes a `.voc` file and rewrites it as a new vocabulary containing
     only the k most frequent words.
   - Optionally deletes words that do not meet the criterion.
+
+9. `longest_word.sh`:
+  - Searches for the longest word in a file.
+

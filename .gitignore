@@ -1,8 +1,13 @@
+# Output
+*.put
+*.txt
+
 # Object files
 *.o
 *.ko
 *.obj
 *.elf
+*.out
 
 # Precompiled Headers
 *.gch

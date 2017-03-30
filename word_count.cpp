@@ -36,12 +36,12 @@ int main(int argc, char *args[]) {
   int msample_len = 0;
 
   for (int i=0;i<n;++i) {
-    char *str = (char*) malloc(max_len * sizeof(char));
     int j;
-    fscanf(f, "%d %s", &j, str);
-    int l = strlen(str);
+    fscanf(f, "%d ", &j);
+    voc[j].s = (char*) malloc(max_len * sizeof(char));
+    fscanf(f, "%s", voc[j].s);
+    int l = strlen(voc[j].s);
     if (l > msample_len) msample_len = l;
-    voc[j].s = str;
     voc[i].c = 0;
   }
 
@@ -61,7 +61,7 @@ int main(int argc, char *args[]) {
   char fmt[30];
   sprintf(fmt, "%%-%ds -> %%4d  (%%06.3f %%%%)\n", msample_len);
   for (int i=0;i<n;++i)
-    printf(fmt, voc[i].s, voc[i].c, 100.0*((double) voc[i].c) / n);
+    printf(fmt, voc[i].s, voc[i].c, 100.0*((double) voc[i].c) / m);
 
   for (int i=0;i<n;++i)
     free(voc[i].s);

@@ -43,3 +43,7 @@
 9. `longest_word.sh`:
   - Searches for the longest word in a file.
 
+10. `rand_sq_gen.cpp`:
+  - Generates a `.pgm` file containing an `N`x`N` (where `N` is a
+    defined macro) square with `n` black squares in random positions.
+

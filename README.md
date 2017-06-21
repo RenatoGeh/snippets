@@ -44,6 +44,10 @@
   - Searches for the longest word in a file.
 
 10. `rand_sq_gen.cpp`:
-  - Generates a `.pgm` file containing an `N`x`N` (where `N` is a
+  - Generates a `.pgm` file containing an `NxN` (where `N` is a
     defined macro) square with `n` black squares in random positions.
 
+11. `sq_gen.cpp`:
+  - Let `N` be the size of a square. `sq_gen.cpp` generates `N-1`
+    distinct instances of an `NxN` square with `n` random black squares in
+    random distinct positions.

@@ -13,6 +13,7 @@ int main(int argc, char *args[]) {
         "Usage: %s n filename\n"
         "  n        - number of black squares\n"
         "  filename - output file name\n", args[0]);
+    return 1;
   }
 
   int n = atoi(args[1]);

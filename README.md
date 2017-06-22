@@ -51,3 +51,8 @@
   - Let `N` be the size of a square. `sq_gen.cpp` generates `N-1`
     distinct instances of an `NxN` square with `n` random black squares in
     random distinct positions.
+
+12. `has_duplicate.sh`:
+  - Given a set of files F, let i and j in F be distinct files.
+    `has_duplicate.sh` returns whether there exists i and j such that
+    the contents of i are equal to those of j.

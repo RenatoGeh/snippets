@@ -1,6 +1,8 @@
 # Output
 *.put
 *.txt
+*.png
+*.pgm
 
 # Object files
 *.o

@@ -56,3 +56,8 @@
   - Given a set of files F, let i and j in F be distinct files.
     `has_duplicate.sh` returns whether there exists i and j such that
     the contents of i are equal to those of j.
+
+13. `cat_sq_gen.sh`:
+  - For every possible n black squares configurations in a square of
+    `NxN` dimension, create a category for each n and output `N^2`
+    configurations into their respective categories.

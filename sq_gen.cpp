@@ -53,7 +53,7 @@ int main(int argc, char *args[]) {
     // check if its binary form has already been selected.
     int *c = new int[m-1]();
     int s;
-    for (int j=0;j<m-1;++j) {
+    for (int j=0;j<m;++j) {
       bool ok = false;
       while (!ok) {
         for (int i=0;i<m;++i) b[i] = 0;

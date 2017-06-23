@@ -20,7 +20,7 @@ int main(int argc, char *args[]) {
   srand(time(NULL));
 
   FILE *out = fopen(args[2], "w");
-  fprintf(out, "P2\n" xstr(N) " " xstr(N) "\n2\n");
+  fprintf(out, "P2\n" xstr(N) " " xstr(N) "\n1\n");
 
   int sq = N*N;
   int *m = new int[sq];

@@ -12,7 +12,7 @@ void draw(int i, int n, int m, int *b) {
   char fname[FILENAME_SIZE];
   sprintf(fname, "b%02dx%02d_n%03d_i%03d.pgm", N, N, n, i);
   FILE *out = fopen(fname, "w");
-  fprintf(out, "P2\n" xstr(N) " " xstr(N) "\n2\n");
+  fprintf(out, "P2\n" xstr(N) " " xstr(N) "\n1\n");
   for (int j=0;j<m;++j) {
     fprintf(out, "%d", b[j]);
     fputc((j+1) % N == 0 ? '\n' : ' ', out);

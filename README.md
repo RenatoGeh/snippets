@@ -61,3 +61,10 @@
   - For every possible n black squares configurations in a square of
     `NxN` dimension, create a category for each n and output `N^2`
     configurations into their respective categories.
+
+14. `pgm2data.sh`:
+  - Generates k random PGM images given a width, height and maximum pixel
+    value.
+  - Debug mode generates individual PGM files for visualization.
+  - Compiles the k images into a `.data` file as specified in
+    <https://github.com/RenatoGeh/gospn>.

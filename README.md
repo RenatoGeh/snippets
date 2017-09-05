@@ -68,3 +68,7 @@
   - Debug mode generates individual PGM files for visualization.
   - Compiles the k images into a `.data` file as specified in
     <https://github.com/RenatoGeh/gospn>.
+
+15. `unique_id.go`:
+  - Tests a one-to-one and onto function for subrectangles in a
+    rectangle.

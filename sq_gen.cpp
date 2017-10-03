@@ -2,8 +2,12 @@
 #include <cstdlib>
 #include <ctime>
 
+#ifndef N
 #define N 4
+#endif
+#ifndef FILENAME_SIZE
 #define FILENAME_SIZE 100
+#endif
 
 #define str(a) #a
 #define xstr(a) str(a)

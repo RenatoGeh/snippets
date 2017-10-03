@@ -72,3 +72,9 @@
 15. `unique_id.go`:
   - Tests a one-to-one and onto function for subrectangles in a
     rectangle.
+
+16. `split_audio.sh`:
+  - Takes an audio or video `f` and splits it into pieces.
+  - Every timestamp given as argument splits `f` from the previous
+    timestamp to the next timestamp.
+  - Great for splitting a single file album audio into multiple singles!

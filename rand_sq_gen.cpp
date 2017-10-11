@@ -2,7 +2,9 @@
 #include <cstdlib>
 #include <ctime>
 
+#ifndef N
 #define N 4
+#endif
 #define xstr(a) str(a)
 #define str(a) #a
 

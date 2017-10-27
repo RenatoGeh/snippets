@@ -6,7 +6,7 @@
 #  3. Constructs a histogram of the cumulative color usage of all PGM files.
 #  4. Prints said histogram to the stdin.
 
-if [ "$#" -lt 2 ] && [ "$#" -gt 5 ]; then
+if [ "$#" -lt "2" ] || [ "$#" -gt "5" ]; then
   echo "Usage: $0 dir bit [parent=1] [plot=1] [real=0]"
   echo "  dir    - directory containing PGM image files."
   echo "  bit    - new bit for compressed PGM files."

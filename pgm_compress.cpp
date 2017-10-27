@@ -25,6 +25,13 @@ int main(int argc, char *args[]) {
   int bit = 4, max = 1;
   int r = 0;
 
+  if (argc < 2) {
+    printf("Usage: %s bit r\n  bit - number of bits for the image's max value\n  r - r=0 if bit "
+        "is the number of bits to be used, else bit is the max value itself.\n",
+        args[0]);
+    return 1;
+  }
+
   if (argc > 1)
     bit = atoi(args[1]);
   if (argc > 3)

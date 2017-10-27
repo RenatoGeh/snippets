@@ -78,3 +78,8 @@
   - Every timestamp given as argument splits `f` from the previous
     timestamp to the next timestamp.
   - Great for splitting a single file album audio into multiple singles!
+
+17. `extract_ty.sh`:
+  - Takes a YouTube URL, downloads the video, extracts the audio (`.mp3`)
+    and splits it into different sections based on timestamps.
+  - Uses `split_audio.sh` to split it by timestamps.

@@ -19,25 +19,18 @@ i=0
 # Get audio duration
 echo "Audio: $fname"
 ufdx=`ffmpeg -i $fname 2>&1 | grep Duration | awk '{print $2}' | tr -d ,`
-dmin=`echo $ufdx | cut -d':' -f2`
-dsec=`echo $ufdx | cut -d':' -f3 | perl -nl -MPOSIX -e 'print ceil($_);'`
-dx=$(( dmin*60+dsec ))
-echo "Duration: $dx"
+echo "Duration: $ufdx"
 echo "Clipping audio bits:"
 
 pp="00:00"
 for s in "${stamps[@]}"; do
-  echo "From $min minutes and $sec seconds ($t secs)"
-  min=`echo $s | cut -d'.' -f1`
-  sec=`echo $s | cut -d'.' -f2`
-  l=$(( min*60+sec ))
-  echo "  to $min minutes and $sec seconds ($l secs)"
+  echo "From $pp"
+  echo "  to $s"
   fout="${fnamenex}_${i}.mp3"
   echo $fname
-  ffmpeg -i $fname -ss "$pp" -to "$min:$sec" -c copy $fout
+  ffmpeg -i $fname -ss "$pp" -to "$s" -c copy $fout
   echo "Outputting audio to $fout."
-  let t=l
-  pp="$min:$sec"
+  pp="$s"
   let i=i+1
 done
 

@@ -83,3 +83,10 @@
   - Takes a YouTube URL, downloads the video, extracts the audio (`.mp3`)
     and splits it into different sections based on timestamps.
   - Uses `split_audio.sh` to split it by timestamps.
+
+18. `diff_cmp.sh`:
+  - Takes a directory and an expression. Finds all same name files from
+    current directory and given directory. For each of these files, use
+    NeoVim's diff tool.
+  - Useful for manually applying patches from different branches of the
+    same repository.

@@ -90,3 +90,6 @@
     NeoVim's diff tool.
   - Useful for manually applying patches from different branches of the
     same repository.
+
+19. `draw_scope.sh`:
+  - Draws the assigned pixels in a `w x h` image.

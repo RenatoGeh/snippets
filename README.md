@@ -93,3 +93,9 @@
 
 19. `draw_scope.sh`:
   - Draws the assigned pixels in a `w x h` image.
+
+20. `pgauss.go`:
+  - Returns the probability of a value in a gaussian distribution with
+    mean and standard deviation given.
+  - Returns up to `p` digits of precision.
+  - Requires `GoNum`.

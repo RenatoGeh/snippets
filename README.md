@@ -99,3 +99,7 @@
     mean and standard deviation given.
   - Returns up to `p` digits of precision.
   - Requires `GoNum`.
+
+21. `argrun.sh`:
+  - Takes a file `f` and command `c`.
+  - For each line `l` in `f`, run `c` with `l` as arguments.

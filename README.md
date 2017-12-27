@@ -103,3 +103,6 @@
 21. `argrun.sh`:
   - Takes a file `f` and command `c`.
   - For each line `l` in `f`, run `c` with `l` as arguments.
+
+22. `prepend.sh`:
+  - Prepends contents of first file to all remaining files.

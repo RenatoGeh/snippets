@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [[ $# -eq 2 ]]; then
+  # Just an easy alias to youtube-dl.
+  youtube-dl --audio-quality 0 --extract-audio --audio-format mp3 --output "$2.%(ext)s" "$1"
+  exit 0
+fi
+
 if [[ $# -lt 3 ]]; then
   echo "Usage: $0 url filename [timestamps]"
   echo "  url        - YouTube URL to extract"
@@ -9,7 +15,7 @@ if [[ $# -lt 3 ]]; then
 fi
 
 echo "Extracting '$1' from YouTube..."
-youtube-dl --extract-audio --audio-format mp3 --output "$2.%(ext)s" "$1"
+youtube-dl --audio-quality 0 --extract-audio --audio-format mp3 --output "$2.%(ext)s" "$1"
 all=( "$@" )
 stamps=( ${all[@]/$1} )
 stamps=( ${stamps[@]/$2} )

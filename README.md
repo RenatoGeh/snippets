@@ -106,3 +106,10 @@
 
 22. `prepend.sh`:
   - Prepends contents of first file to all remaining files.
+
+23. `extract_credits.sh`:
+  - Extracts credit information from University of São Paulo's (USP)
+    course webpage.
+  - Takes a list of courses and outputs the number of theory and practical
+    credits, aswell as total credits for each type of credit.
+  - Requires `lynx`.

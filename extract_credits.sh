@@ -31,3 +31,4 @@ for d in ${in_data[@]}; do
   printf "Credits:\n  Theory: %d\n  Practical: %d\n\n" $a $t
 done
 let total=a_total+t_total
+printf "Total theory credits: %2d\nTotal practical credits: %2d\nTotal credits overall: %2d\n" $a_total $t_total $total

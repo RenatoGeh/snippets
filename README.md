@@ -113,3 +113,11 @@
   - Takes a list of courses and outputs the number of theory and practical
     credits, aswell as total credits for each type of credit.
   - Requires `lynx`.
+
+24. `spot.sh`:
+  - Prints sidescrolling Spotify information.
+  - Requires `playerctl` and the Spotify App.
+  - Great for i3status bar.
+  - Prints Title, Artist and Album.
+  - Prompt cycles sideways every second, avoiding long titles to be
+    hidden by other i3status components.

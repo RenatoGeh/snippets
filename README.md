@@ -121,3 +121,6 @@
   - Prints Title, Artist and Album.
   - Prompt cycles sideways every second, avoiding long titles to be
     hidden by other i3status components.
+
+25. `draw_region.sh`:
+  - Draws a region of a rectangle given width, height and pixels.

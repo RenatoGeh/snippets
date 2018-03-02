@@ -124,3 +124,9 @@
 
 25. `draw_region.sh`:
   - Draws a region of a rectangle given width, height and pixels.
+
+26. `list_ratios.c`:
+  - Takes arguments `w`, `h` and `d`, where `(w, h)` are dimensions and
+    `d` divides `w` and `h`.
+  - Returns all possible dimensions `(x, y)` such that `d` divides both
+    `x` and `y`, and ordered s.t. the ratio `x/y` is the closest to `w/h`.

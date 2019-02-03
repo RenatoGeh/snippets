@@ -20,7 +20,7 @@
 # Strasbourg St. Denis, Roy Hargrove
 #
 # $ python3
-# >>> from author_org import *
+# >>> from binder_org import *
 # >>> B = Binder.loadtxt("sheets.txt")
 # >>> B.print()
 # ... This will print a binder organized by Author

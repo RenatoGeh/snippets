@@ -130,3 +130,10 @@
     `d` divides `w` and `h`.
   - Returns all possible dimensions `(x, y)` such that `d` divides both
     `x` and `y`, and ordered s.t. the ratio `x/y` is the closest to `w/h`.
+
+27. `binder_org.py`:
+  - Binder organizer for music sheets or other compatible formats.
+  - Prints how a binder should be organized given a set of sheets.
+  - Output is ordered alphabetically and either categorized by author or
+    title's first letter.
+  - Load from file or directly through methods.

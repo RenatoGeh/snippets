@@ -64,7 +64,7 @@ class Sleeve:
     self.sheets.append(s)
 
   def sort(self):
-    self.sheets.sort()
+    self.sheets.sort(key=lambda e: e.name.lower())
 
   def len(self):
     return len(self.sheets)
@@ -77,24 +77,31 @@ class Sleeve:
 class Binder:
   sleeves = None
   titles = None
+  n = None
 
   def __init__(self):
     self.sleeves = {}
     self.titles = []
+    self.n = 0
 
   def add(self, s, k):
     if k not in self.sleeves:
       self.sleeves[k] = Sleeve()
-      self.titles.append(k)
+      self.titles.append([k, self.sleeves[k]])
     self.sleeves[k].add(s)
+    self.n += 1
 
-  def sort(self):
-    self.titles.sort()
+  def sort(self, key=lambda e: e[0].lower(), reverse=False):
+    self.titles.sort(key=key, reverse=reverse)
 
-  def print(self):
-    print(f'Listing sleeves and their contents:\n===================================')
-    for i, t in enumerate(self.titles):
-      s = self.sleeves[t]
+  def print(self, key=None, reverse=False):
+    self.sort(key=key, reverse=reverse)
+    print(f'Listing sleeves and their contents:\n  Titles: {self.n:d}\n'
+          f'  Sleeves: {len(self.sleeves):d}\n')
+    print('===================================')
+    for i, T in enumerate(self.titles):
+      t, s = T[0], T[1]
+      s.sort()
       print(f'Sleeve {i+1:d}: {t.title():s} ({s.len():d} titles):\n---')
       s.print()
 
@@ -115,3 +122,16 @@ class Binder:
       B.add(s, key(s)())
     B.sort()
     return B
+
+if __name__ == "__main__":
+  n = len(sys.argv)
+  if n < 2 or n > 3:
+    print(f'Usage: {sys.argv[0]:s} in_file [key]\n'
+          f'  in_file - file containing titles and authors\n'
+          f'  key     - whether to sort by \'author\' or \'name\'')
+    sys.exit(1)
+  key = SortAuthor
+  if n == 3 and sys.argv[2] == 'name':
+    key = SortName
+  B = Binder.loadtxt(sys.argv[1], key)
+  B.print()

@@ -144,3 +144,6 @@
 
 29. `generate_all.sh`
   - Utility script for generating ctags for common libs.
+
+30. `generate_ttt.c`
+  - Generate all possible endgame configurations of the tic-tac-toe game.

@@ -3,7 +3,7 @@
 #include <string.h>
 
 #define BOARD_LENGTH 9
-#define LINE_MAX_LENGTH 28
+#define LINE_MAX_LENGTH 68
 
 #define X_MARK 1
 #define O_MARK 2
@@ -53,6 +53,14 @@ List* push(List *l, char *line) {
   return n;
 }
 
+int length(List *head) {
+  int i;
+  List *l = head->next;
+  for (i = 0; l != NULL; ++i)
+    l = l->next;
+  return i;
+}
+
 /* Returns whether the given positions are a winning position. */
 #define win_pos(b, i, j, k, w) ((((b)[(i)]) == w) && ((((b)[(j)]) == w) && (((b)[(k)]) == w)))
 /* Returns whether the current board is a winning board. */
@@ -84,20 +92,47 @@ int eog(char board[BOARD_LENGTH]) {
 /* Human readable square to character. */
 #define hstoc(x) (x) == 0 ? ' ' : (x) == 1 ? 'x' : 'o'
 
-/* Board to line. */
-List* btol(List *prev, char board[BOARD_LENGTH]) {
+/* Print board. */
+void printb(char b[BOARD_LENGTH]) {
   int i;
-  char c[BOARD_LENGTH];
+  for (i = 0; i < 3; ++i)
+    printf(" %c | %c | %c\n", hstoc(b[3*i]), hstoc(b[3*i+1]), hstoc(b[3*i+2]));
+}
+
+/* Board to line. */
+List* btol(List *prev, char board[BOARD_LENGTH], bool dnf) {
+  int i;
   char line[LINE_MAX_LENGTH];
-  for (i = 0; i < BOARD_LENGTH; ++i)
-    c[i] = stoc(board[i]);
-  sprintf(line, "%c,%c,%c,%c,%c,%c,%c,%c,%c,%s\n", c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7],
-      c[8], won(board, X_MARK) ? "positive" : "negative");
+  if (dnf) {
+    int e;
+    e = 0;
+    for (i = 0; i < 18; ++i) {
+      int r = i % 2;
+      if ((r == 0 && board[i/2] != X_MARK) || (r == 1 && board[i/2] != BLANK)) line[e++] = '-';
+      if (i+1 >= 10) line[e++] = '1';
+      line[e++] = '0' + ((i+1)%10);
+      line[e++] = ' ';
+    }
+    if (!won(board, X_MARK)) line[e++] = '-';
+    line[e++] = '1';
+    line[e++] = '9';
+    line[e++] = '\n';
+    line[e] = '\0';
+  } else {
+    char c[BOARD_LENGTH];
+    for (i = 0; i < BOARD_LENGTH; ++i)
+      c[i] = stoc(board[i]);
+    sprintf(line, "%c,%c,%c,%c,%c,%c,%c,%c,%c,%s\n", c[0], c[1], c[2], c[3], c[4], c[5], c[6],
+        c[7], c[8], won(board, X_MARK) ? "positive" : "negative");
+  }
+  /*printb(board);*/
+  /*puts(won(board, X_MARK) ? "win" : "not win");*/
+  /*puts("=====");*/
   return push(prev, line);
 }
 
 /* Write all List contents to file. */
-void write(const char *filename, List *l) {
+void write(const char *filename, List *l, bool dnf) {
   List *n;
   FILE *f;
   n = l;
@@ -106,6 +141,8 @@ void write(const char *filename, List *l) {
     puts("Error writing to file");
     exit(1);
   }
+  if (dnf)
+    fprintf(f, "p dnf 19 %d\n", length(l)+1);
   while (n != NULL) {
     fputs(n->line, f);
     n = n->next;
@@ -129,23 +166,15 @@ void rstbrd(char b[BOARD_LENGTH]) {
 /* Next player. If 1, switch to 2; if 2 switch to 1. */
 #define nwho(x) 2+((1-(x)))%2
 
-int length(List *head) {
-  int i;
-  List *l = head->next;
-  for (i = 0; l != NULL; ++i)
-    l = l->next;
-  return i;
-}
-
 /* Simulate game trace. */
-List* simulate(List *prev, char b[BOARD_LENGTH], int who) {
+List* simulate(List *prev, char b[BOARD_LENGTH], int who, bool dnf) {
   int i, m, r;
   char c[BOARD_LENGTH];
   List *tail;
 
   r = eog(b);
   if (r != BLANK)
-    return btol(prev, b);
+    return btol(prev, b, dnf);
 
   m = nwho(who);
   tail = prev;
@@ -153,33 +182,29 @@ List* simulate(List *prev, char b[BOARD_LENGTH], int who) {
   for (i = 0; i < BOARD_LENGTH; ++i)
     if (c[i] == BLANK) {
       c[i] = m;
-      tail = simulate(tail, c, m);
+      tail = simulate(tail, c, m, dnf);
       c[i] = BLANK;
     }
 
   return tail;
 }
 
-/* Print board. */
-void printb(char b[BOARD_LENGTH]) {
-  int i;
-  for (i = 0; i < 3; ++i)
-    printf(" %c | %c | %c\n", hstoc(b[3*i]), hstoc(b[3*i+1]), hstoc(b[3*i+2]));
-}
-
 /* Print help/usage message. */
 void printh(char *bin) {
-  printf("Usage: %s file [-x|-o|-2]\n"
+  printf("Usage: %s file [-x|-o|-2] [-d]\n"
+      "    Generates set of all possible tic-tac-toe endgames given constraints.\n"
       "  Positional arguments:\n"
       "    file - CSV file to save output to\n"
       "  Optional flags:\n"
       "    -x   - only save game traces where X starts\n"
       "    -o   - only save game traces where O starts\n"
-      "    -2   - save both game traces\n", bin);
+      "    -2   - save both game traces\n"
+      "    -d   - save as a DNF file\n", bin);
 }
 
 int main(int argc, char *args[]) {
   int i;
+  bool dnf;
   char b[BOARD_LENGTH], which;
   char* filename;
   List *head;
@@ -191,6 +216,7 @@ int main(int argc, char *args[]) {
 
   /* Parse arguments. */
   which = X_MARK;
+  dnf = false;
   for (i = 1; i < argc; ++i)
     if (!strcmp(args[i], "-h") || !strcmp(args[i], "--help")) {
       printh(args[0]);
@@ -199,18 +225,20 @@ int main(int argc, char *args[]) {
       which = O_MARK;
     else if (!strcmp(args[i], "-2"))
       which = BOTH;
+    else if (!strcmp(args[i], "-d"))
+      dnf = true;
   filename = args[1];
 
   head = new_list();
   for (i = 0; i < BOARD_LENGTH; ++i) b[i] = BLANK;
 
   if (which == BOTH)
-    simulate(simulate(head, b, X_MARK), b, O_MARK);
+    simulate(simulate(head, b, X_MARK, dnf), b, O_MARK, dnf);
   else
-    simulate(head, b, which);
+    simulate(head, b, which, dnf);
 
   printf("Length of list: %d\n", length(head));
-  write(filename, head->next);
+  write(filename, head->next, dnf);
 
   free_list(head);
 
